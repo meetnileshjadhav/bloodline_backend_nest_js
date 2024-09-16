@@ -20,4 +20,5 @@ export class CreateUserDTO {
 
     @IsString()
     role:string;
+    
 }
