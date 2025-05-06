@@ -24,6 +24,9 @@ async function bootstrap() {
     }),
   });
 
+  app.use(cors());
+  app.setGlobalPrefix('api/v1');
+
   const configService = app.get(ConfigService);
 
   const config = new DocumentBuilder()
@@ -39,7 +42,7 @@ async function bootstrap() {
   const port = configService.get<number>('PORT') || 3000;
   await app.listen(port);
 
-  const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
-  logger.log('info', `Application is running on: http://localhost:${port}`);
+  // const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  // logger.log('info', `Application is running on: http://localhost:${port}`);
 }
 bootstrap();
