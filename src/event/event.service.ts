@@ -4,12 +4,15 @@ import { UpdateEventDTO } from './dto/update-event.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from './entity/event.entity';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class EventService {
     constructor(
         @InjectRepository(Event)
         private readonly eventRepository: Repository<Event>,
+        private readonly httpService: HttpService,
     ) {}
 
     async getAllEvents() {
@@ -71,5 +74,17 @@ export class EventService {
     async getAllBookings() {
         // Placeholder for fetching all bookings for admin
         return { message: 'All bookings fetched successfully' };
+    }
+
+    async getEventLocation(address: string): Promise<any> {
+        const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY'; // Replace with your actual API key
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+
+        try {
+            const response = await firstValueFrom(this.httpService.get<any>(url));
+            return response.data;
+        } catch (error) {
+            throw new Error('Failed to fetch location data');
+        }
     }
 }
