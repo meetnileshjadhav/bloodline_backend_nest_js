@@ -1,4 +1,6 @@
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+// auth.controller.ts - Handles authentication-related requests
+
+import { Body, Controller, Post, Request, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from 'src/user/dto/create-user.dto';
@@ -14,10 +16,17 @@ export class AuthController {
         return this.authService.register(registerDTO);
     }
 
+    // @desc     Login user
+    // @route    POST /auth/login
+    // @access   Public
     // @UseGuards(LocalAuthGuard)
     @Post('login')
     @ApiBody({ type: LoginDTO })
     async login(@Body() loginDTO: LoginDTO, @Request() req:any) {
-        return this.authService.login(loginDTO.username, loginDTO.password);
+        try {
+            return this.authService.login(loginDTO.username, loginDTO.password);
+        } catch (error) {
+            throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+        }
     }
 }

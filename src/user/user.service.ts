@@ -14,6 +14,7 @@ export class UserService {
         const newUser = this.userRepository.create(user);
         return this.userRepository.save(newUser);
     }
+    
 
     async findByUsername(username:string): Promise<User|undefined> {
         return this.userRepository.findOneBy({username});

@@ -7,7 +7,7 @@ import { LocalStrategy } from "./auth-strategy/local.strategy";
 import { AuthController } from "./auth.controller";
 import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy } from "./auth-strategy/jwt.strategy";
-import { RolesGuard } from "./auth-guard/roles.guard";
+import { RolesGuard } from "../auth/roles/role.guard";
 
 @Module({
     imports: [

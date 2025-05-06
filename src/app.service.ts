@@ -1,3 +1,4 @@
+// app.service.ts - Contains business logic for the application
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

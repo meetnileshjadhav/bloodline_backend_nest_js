@@ -1,0 +1,29 @@
+
+### ✅ NestJS Comment Rules (Short & Practical)
+
+#### 1. File Headers
+// user.service.ts - Handles user DB operations and business logic
+
+#### 2. Controller Methods
+// @desc     Create a new event
+// @route    POST /events
+// @access   Admin
+
+#### 3. Service/Logic Comments
+// Hash the password before saving
+
+#### 4. Class-Level Description
+/**
+ * JwtStrategy validates JWTs and attaches user info to request
+ */
+
+#### 5. Guards/Interceptors Explanation
+// RoleGuard checks if the user has the required role to access this route
+
+#### 6. Avoid Obvious Comments
+// ❌ Don't do this:
+// Increase i by 1
+// i++;
+
+### 🧠 Pro Tip:
+Focus on **why** the code exists or does something non-obvious — not just what it does.

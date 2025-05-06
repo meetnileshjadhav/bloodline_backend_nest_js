@@ -1,3 +1,4 @@
+// auth.service.ts - Contains authentication and authorization logic
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDTO } from 'src/user/dto/create-user.dto';
 import { User } from 'src/user/entity/user.entity';
@@ -13,6 +14,7 @@ export class AuthService {
     ) {}
 
     async register(user: CreateUserDTO): Promise<User | undefined> {
+        // Hash the password before saving
         const hashedPassword = await bcrypt.hash(user.password, 10);
         const newUser = await this.userService.create({
             ...user,
@@ -20,6 +22,7 @@ export class AuthService {
         });
         return newUser;
     }
+    
 
     async validateUser(username: string, password: string): Promise<any> {
         const user = await this.userService.findByUsername(username);
@@ -33,13 +36,12 @@ export class AuthService {
     async login(username: string, password: string): Promise<{ access_token: string | null }> {
         const user = await this.validateUser(username, password);
         if (!user) {
-          throw new UnauthorizedException();
+            throw new UnauthorizedException();
         }
-      
-        const payload = { username: user.username, sub: user.id };
+
+        const payload = { username: user.username, sub: user.id, role: user.role };
         return {
-          access_token: this.jwtService.sign(payload),
+            access_token: this.jwtService.sign(payload),
         };
-      }
-      
+    }
 }

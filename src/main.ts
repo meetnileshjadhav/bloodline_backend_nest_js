@@ -4,13 +4,13 @@ import * as cors from 'cors';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-const corsOptions : cors.CorsOptions = {
-  origin : 'http://localhost:3001'
-}
+// const corsOptions : cors.CorsOptions = {
+//   origin : 'http://localhost:3001'
+// }
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(cors(corsOptions));
+  // app.use(cors(corsOptions));
 
   const configService = app.get(ConfigService);
 
